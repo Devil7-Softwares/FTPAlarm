@@ -25,7 +25,7 @@ public class AlarmService extends JobService {
 
     @Override
     public boolean onStartJob(final JobParameters params) {
-        CheckFTPTask checkFTP = CheckFTPTask.getInstance(false);
+        CheckFTPTask checkFTP = CheckFTPTask.getInstance(true);
         checkFTP.setOnResultListner(new CheckFTPTask.ResultListener() {
             @Override
             public void Result(int count) {

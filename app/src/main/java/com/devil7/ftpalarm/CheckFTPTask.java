@@ -36,6 +36,7 @@ public class CheckFTPTask extends AsyncTask<Context, Void, Integer> {
         if (mInstance == null) {
             mInstance = new CheckFTPTask(isBackgroundThread);
         }
+        mInstance.mIsBackgroundThread = isBackgroundThread;
         return mInstance;
     }
 

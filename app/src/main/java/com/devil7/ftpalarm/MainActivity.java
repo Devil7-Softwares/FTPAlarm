@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             if(CheckSettings()) {
                 SaveSettings();
                 DisableControls();
-                CheckFTPTask checkFTP = CheckFTPTask.getInstance(true);
+                CheckFTPTask checkFTP = CheckFTPTask.getInstance(false);
                 checkFTP.setOnResultListner(new CheckFTPTask.ResultListener() {
                     @Override
                     public void Result(int count) {
