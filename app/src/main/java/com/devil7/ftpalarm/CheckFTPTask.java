@@ -88,7 +88,14 @@ public class CheckFTPTask extends AsyncTask<Context, Void, Integer> {
 
             // uses simpler methods
             String[] files2 = ftpClient.listNames();
-            count += files2.length;
+            if(files2 != null){
+                count += files2.length;
+            }else{
+                ftpClient.enterLocalPassiveMode();
+                files2 = ftpClient.listNames();
+                showServerReply(ftpClient);
+                count += (files2!=null ? files2.length : 0);
+            }
 
 
         } catch (IOException ex) {
