@@ -184,8 +184,8 @@ public class MainActivity extends AppCompatActivity {
                             jobScheduler.schedule(new JobInfo.Builder(0, new ComponentName(context, AlarmService.class))
                                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                                     .setPersisted(true)
-                                    .setMinimumLatency(15000)
-                                    //.setPeriodic(totalMinutes * (60 * 1000))
+                                    //.setMinimumLatency(15000)
+                                    .setPeriodic(totalMinutes * (60 * 1000))
                                     .build());
                             Toast.makeText(getApplicationContext(), R.string.toast_service_enabled, Toast.LENGTH_LONG).show();
                         }
