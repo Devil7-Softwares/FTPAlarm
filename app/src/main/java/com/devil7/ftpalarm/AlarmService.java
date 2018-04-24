@@ -44,11 +44,11 @@ public class AlarmService extends JobService {
 
                     Intent startIntent = new Intent(getApplicationContext(), RingtoneService.class);
 
-                    //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    //    getApplicationContext().startForegroundService(startIntent);
-                    //} else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        getApplicationContext().startForegroundService(startIntent);
+                    } else {
                         getApplicationContext().startService(startIntent);
-                    //}
+                    }
 
                     JobScheduler jobScheduler =
                             (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);

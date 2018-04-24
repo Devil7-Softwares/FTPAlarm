@@ -5,6 +5,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,14 +22,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-public class RingtoneService extends Service {
+public class RingtoneService extends JobService {
     private Ringtone ringtone;
-
-    @Override
-    public IBinder onBind(Intent intent)
-    {
-        return null;
-    }
 
     @Override
     public void onCreate() {
@@ -67,6 +64,16 @@ public class RingtoneService extends Service {
         NotificationManager service = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         service.createNotificationChannel(chan);
         return channelId;
+    }
+
+    @Override
+    public boolean onStopJob(final JobParameters params) {
+        return true;
+    }
+
+    @Override
+    public boolean onStartJob(final JobParameters params) {
+        return true;
     }
 
     @Override

@@ -26,7 +26,10 @@
             android:name=".AlarmService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="true" />
-        <service android:enabled="true" android:name=".RingtoneService" />
+        <service android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true"
+            android:name=".RingtoneService" />
     </application>
 
 </manifest>
