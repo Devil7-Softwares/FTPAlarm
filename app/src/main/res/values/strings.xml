@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">FTP Alarm</string>
+
+    <!-- Main Activity -->
+    <string name="enableAlarm">Enable FTP alarm service</string>
+
+    <string name="serverDetails">FTP server details</string>
+    <string name="server">Server</string>
+    <string name="port">Port</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+    <string name="interval">Interval</string>
+    <string name="hour">Hour(s)</string>
+    <string name="minute">Minute(s)</string>
+
+    <string name="dialog_message">Fetching list from FTP</string>
+
+    <string name="toast_service_enabled">FTP Alarm service enabled</string>
+    <string name="toast_service_not_enabled">FTP Alarm service not enabled</string>
+    <string name="toast_service_disabled">FTP Alarm service disabled</string>
+</resources>
