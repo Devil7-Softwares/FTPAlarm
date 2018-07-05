@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
 import java.io.IOException;
@@ -63,7 +64,9 @@ public class CheckFTPTask extends AsyncTask<Context, Void, Integer> {
         String user = preferences.getString(MainActivity.APP_USERNAME, "");
         String pass = preferences.getString(MainActivity.APP_PASSWORD, "");
 
-        int count = 0;
+        //int count = 0;
+        IntegerHolder mCount = new IntegerHolder();
+        mCount.value = 0;
 
         FTPClient ftpClient = new FTPClient();
 
@@ -89,12 +92,13 @@ public class CheckFTPTask extends AsyncTask<Context, Void, Integer> {
             // uses simpler methods
             String[] files2 = ftpClient.listNames();
             if(files2 != null){
-                count += files2.length;
+                //count += files2.length;
+                listDirectory(ftpClient,"/","",0,mCount,3);
             }else{
                 ftpClient.enterLocalPassiveMode();
                 files2 = ftpClient.listNames();
                 showServerReply(ftpClient);
-                count += (files2!=null ? files2.length : 0);
+                if (files2 != null) listDirectory(ftpClient,"/","",0,mCount,3);
             }
 
 
@@ -114,7 +118,39 @@ public class CheckFTPTask extends AsyncTask<Context, Void, Integer> {
             }
         }
 
-        return count;
+        //return count;
+        Log.e("FTP",mCount.value.toString());
+        return mCount.value;
+    }
+
+    class IntegerHolder {
+        public Integer value;
+    }
+
+    static void listDirectory(FTPClient ftpClient, String parentDir,
+                              String currentDir, int level, IntegerHolder mCount, Integer MaxDepth) throws IOException {
+        if (level == MaxDepth) return;
+        String dirToList = parentDir;
+        if (!currentDir.equals("")) {
+            dirToList += "/" + currentDir;
+        }
+        FTPFile[] subFiles = ftpClient.listDirectories(dirToList);
+        if (subFiles != null && subFiles.length > 0) {
+            for (FTPFile aFile : subFiles) {
+                String currentFileName = aFile.getName();
+                if (currentFileName.equals(".")
+                        || currentFileName.equals("..")) {
+                    continue;
+                }
+                for (int i = 0; i < level; i++) {
+                    System.out.print("\t");
+                }
+                if (aFile.isDirectory()) {
+                    mCount.value +=1;
+                    listDirectory(ftpClient, dirToList, currentFileName, level + 1, mCount, MaxDepth);
+                }
+            }
+        }
     }
 
     @Override
