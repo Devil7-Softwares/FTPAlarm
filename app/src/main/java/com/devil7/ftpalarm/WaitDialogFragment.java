@@ -15,6 +15,7 @@ public class WaitDialogFragment extends DialogFragment {
     private String message;
     public static WaitDialogFragment newInstance(String message) {
         WaitDialogFragment frag = new WaitDialogFragment();
+        frag.setCancelable(false);
         frag.message = message;
         return frag;
     }
@@ -29,6 +30,8 @@ public class WaitDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         setCancelable(true);
         AlertDialog dialog = ShowProgressDialog(getContext(),"", message);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
         return dialog;
     }
 

@@ -34,11 +34,13 @@ public class WaitDialogHandler extends Handler {
                     ft.addToBackStack(null);
 
                     WaitDialogFragment dialog = WaitDialogFragment.newInstance(mContext.getString(msg.arg1));
+                    dialog.setCancelable(false);
                     dialog.show(ft, DIALOG_TAG);
                 }
                 break;
             case MSG_CLOSE_DIALOG:
                 WaitDialogFragment dialog = getOTADialogFragment();
+                dialog.setCancelable(false);
                 if (dialog != null) {
                     dialog.dismissAllowingStateLoss();
                 }
