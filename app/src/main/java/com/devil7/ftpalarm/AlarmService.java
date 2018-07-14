@@ -22,9 +22,16 @@ import android.util.Log;
 public class AlarmService extends JobService {
 
     PowerManager.WakeLock fullWakeLock;
+    PowerManager.WakeLock partialWakeLock;
 
     @Override
     public boolean onStartJob(final JobParameters params) {
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        partialWakeLock = powerManager.newWakeLock((PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "FTP Alarm - Alarm Service Wake Lock");
+        partialWakeLock.acquire(600000);
+
+        try{Thread.sleep(60000);}catch(Exception ex){}
+
         CheckFTPTask checkFTP = CheckFTPTask.getInstance(true);
         checkFTP.setOnResultListner(new CheckFTPTask.ResultListener() {
             @Override
@@ -36,7 +43,7 @@ public class AlarmService extends JobService {
 
                     PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
                     fullWakeLock = powerManager.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "FTP Alarm - Wake Lock");
-                    fullWakeLock.acquire(60000);
+                    fullWakeLock.acquire(600000);
 
                     KeyguardManager keyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
                     KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("TAG");
